@@ -31,77 +31,70 @@ class App extends Component {
     ],
     markers: []
   }
+//&callback=initMap
+componentDidMount(){
+    this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
+    
+    window.initMap = this.initMap
+    //this.initMap()
+  }
 
-/*componentDidMount(){
-    if(!window.google) {
-      console.error("Error: not load yet"); //Google API not load yet
-    } else {
-      this.initMap(); //render the map
-      
-    }
-  }*/
-/*componentDidMount() {
-    const script = document.createElement('script');
-    script.async = true;
-    script.defer = true;
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3`;
-    //script.setAttribute('onerror', `googleError()`);
-    script.addEventListener('load', () => {
-      /*this.setState({
-        mapIsReady: true,
-        infoWindow: new window.google.maps.InfoWindow({
-          maxWidth: 350
-        }),
-        animation: window.google.maps.Animation.DROP,
-        initialLocations: this.state.locations
-      });
-    });*/
-    /*document.body.appendChild(script);
-//this.initMap();
-  })
+//renderMap = () => {
+  //this.loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
+//}
+
+  initMap = () => {
+   
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+        center: { lat: 33.448376, lng: -112.074036 },
+        zoom: 13
+      }) 
+    
+  }; 
+
+
+
+  loadMap = (url) => {
+  //let container = window.document.getElementsByTagName('script')[0]
+  let script = window.document.createElement('script')
+  script.src = url
+  script.async = true
+  script.defer = true
+  //container.parentNode.insertBefore(script, container)
+  document.body.appendChild(script)
 }
 
-  // Once the API has loaded initialize the map
-  componentDidUpdate() {
-    this.initMap();
-  }*/
 
-  /*
-    Initialize the Google Map and center it on our location
-    Setting Google Maps up in React 
-  */
-  /*initMap = () => {
+
+  /*componentDidMount(){
+    this.renderMap()
+    window.initMap = this.initMap
+  }
+
+renderMap = () => {
+  this.loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
+}
+
+  initMap = () => {
    
-      this.map = new window.google.maps.Map(document.getElementById('map'), {
+      const map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat: 33.448376, lng: -112.074036 },
-        zoom: 13//,
-        //mapTypeId: 'roadmap'
-      });   //this.addMarkers(this.map);
+        zoom: 13
+      }) 
     
-  };*/
-
-
-/*componentDidMount(){
-    if(!window.google) {
-      console.error("Error: not load yet"); //Google API not load yet
-    } else {
-      this.initMap(); //render the map
-      this.initMarker();
-    }
-  }*/
-
-   /*initMap = () => {
-    //const container = document.getElementById('map');
-    new window.google.maps.Map(this.container, {
-      center: {lat: 33.448376, lng: -112.074036}, //Phoenix
-      zoom: 13
-    })
-  }*/
+  }; 
 
 
 
-
-
+  loadScript = (url) => {
+  let index = window.document.getElementsByTagName('script')[0]
+  let script = window.document.createElement('script')
+  script.src = url
+  script.async = true
+  script.defer = true
+  index.parentNode.insertBefore(script, index)
+}
+*/
   render() {
     return (
       <div className="App">
@@ -111,6 +104,9 @@ class App extends Component {
       
     );
   }
+
 }
+
+
 
 export default App;
