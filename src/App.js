@@ -5,7 +5,7 @@ import Map from './components/Map'
 
 class App extends Component {
  state = {
-  
+  map: {},
     locations: [
       {
         title: 'Pomo Pizzeria Phoenix',
@@ -45,7 +45,7 @@ componentDidMount(){
 
   initMap = () => {
    
-      const map = new window.google.maps.Map(document.getElementById('map'), {
+      this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat: 33.448376, lng: -112.074036 },
         zoom: 13
       }) 
@@ -99,7 +99,7 @@ renderMap = () => {
     return (
       <div className="App">
         <List />
-        <Map />        
+        <Map state={ this.state } />        
       </div>
       
     );
