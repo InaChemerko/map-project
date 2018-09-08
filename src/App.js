@@ -60,7 +60,7 @@ getVenues = () => {
     this.setState({
       venues: response.data.response.groups[0].items
     })
-    console.log(response)
+    //console.log(response)
   })
   .catch(error => {
     console.log("error " + error)
@@ -73,6 +73,14 @@ getVenues = () => {
         center: { lat: 33.448376, lng: -112.074036 },
         zoom: 13
       }) 
+
+let marker = new window.google.maps.Marker({
+    position: { lat: 33.448376, lng: -112.074036 },
+    map: this.map,
+    title: 'Hello World!'
+  })
+
+
     
   }; 
 
@@ -142,3 +150,6 @@ export default App;
 //Get Venue Recommendations
 
 //https://developer.foursquare.com/docs/api/venues/explore
+
+//for making markers
+//https://developers.google.com/maps/documentation/javascript/markers
