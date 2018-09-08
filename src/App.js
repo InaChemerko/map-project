@@ -36,15 +36,18 @@ class App extends Component {
 //&callback=initMap
 componentDidMount(){
   this.getVenues()
-    this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
+    //this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
     
-    window.initMap = this.initMap
-    //this.initMap()
+    //window.initMap = this.initMap
+    
   }
 
-//renderMap = () => {
-  //this.loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
-//}
+renderMap = () => {
+  this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
+window.initMap = this.initMap
+
+}
+
 getVenues = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?"
   const parameters = {
@@ -59,7 +62,7 @@ getVenues = () => {
   .then(response => {
     this.setState({
       venues: response.data.response.groups[0].items
-    })
+    }, this.renderMap())
     //console.log(response)
   })
   .catch(error => {
@@ -74,14 +77,18 @@ getVenues = () => {
         zoom: 13
       }) 
 
-let marker = new window.google.maps.Marker({
+this.state.venues.map(myVenue => {
+  let marker = new window.google.maps.Marker({
+    position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
+    map: this.map,
+    title: 'Hello World!'
+  })    
+})
+/*let marker = new window.google.maps.Marker({
     position: { lat: 33.448376, lng: -112.074036 },
     map: this.map,
     title: 'Hello World!'
-  })
-
-
-    
+  }) */   
   }; 
 
 
