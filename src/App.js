@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import List from './components/List';
 import Map from './components/Map'
+import axios from 'axios'
 
 class App extends Component {
  state = {
@@ -33,6 +34,7 @@ class App extends Component {
   }
 //&callback=initMap
 componentDidMount(){
+  this.getVenues()
     this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
     
     window.initMap = this.initMap
@@ -42,6 +44,24 @@ componentDidMount(){
 //renderMap = () => {
   //this.loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
 //}
+getVenues = () => {
+  const endPoint = "https://api.foursquare.com/v2/venues/explore?"
+  const parameters = {
+    client_id: "T2NFWF0KPILX42AMYNIGSTDCVTOPVVCVRLVLMZHSATQ4BTMV",
+    client_secret: "0QHIFNP3GJO25MFWCHKFXCMF1DOZYXSY4LEKYOBGXQNEO24L",
+    query: "food",
+    near: "Phoenix",
+    v: "20182507"
+  }
+
+  axios.get(endPoint + new URLSearchParams(parameters))
+  .then(response => {
+    console.log(response)
+  })
+  .catch(error => {
+    console.log("error " + error)
+  })
+}
 
   initMap = () => {
    
@@ -110,3 +130,11 @@ renderMap = () => {
 
 
 export default App;
+
+//making http requests
+//https://medium.com/@thejasonfile/fetch-vs-axios-js-for-making-http-requests-2b261cdd3af5
+//https://flaviocopes.com/axios/
+
+//Get Venue Recommendations
+
+//https://developer.foursquare.com/docs/api/venues/explore
