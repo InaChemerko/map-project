@@ -6,6 +6,7 @@ import axios from 'axios'
 
 class App extends Component {
  state = {
+  venues: [],
   map: {},
     locations: [
       {
@@ -56,6 +57,9 @@ getVenues = () => {
 
   axios.get(endPoint + new URLSearchParams(parameters))
   .then(response => {
+    this.setState({
+      venues: response.data.response.groups[0].items
+    })
     console.log(response)
   })
   .catch(error => {
