@@ -72,17 +72,45 @@ getVenues = () => {
 
   initMap = () => {
    
+   //create a map
       this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat: 33.448376, lng: -112.074036 },
         zoom: 13
       }) 
 
+
+//create an infowindow
+let infowindow = new window.google.maps.InfoWindow()
+
+//display dinamic markers
 this.state.venues.map(myVenue => {
+
+  let contentString = `${myVenue.venue.name}`;
+
+//create an infowindow
+/*let infowindow = new window.google.maps.InfoWindow({
+          content: contentString
+        });*/
+
+
+//create a marker
   let marker = new window.google.maps.Marker({
     position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
     map: this.map,
-    title: 'Hello World!'
-  })    
+    //title: myVenue.venue.name
+  })
+
+//click on a marker
+marker.addListener('click', function() {
+
+  //change the content
+  infowindow.setContent(contentString)
+
+  //open an infowindow
+          infowindow.open(this.map, marker);
+        });
+
+
 })
 /*let marker = new window.google.maps.Marker({
     position: { lat: 33.448376, lng: -112.074036 },
@@ -160,3 +188,6 @@ export default App;
 
 //for making markers
 //https://developers.google.com/maps/documentation/javascript/markers
+
+//for making infowindow
+//https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
