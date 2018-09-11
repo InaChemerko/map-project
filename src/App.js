@@ -3,35 +3,15 @@ import './App.css';
 import List from './components/List';
 import Map from './components/Map'
 import axios from 'axios'
+import escapeRegExp from 'escape-string-regexp'
+//import sortBy from 'sort-by'
 
 class App extends Component {
  state = {
   venues: [],
   map: {},
-    locations: [
-      {
-        title: 'Pomo Pizzeria Phoenix',
-        location: { lat: 33.4560, lng: -112.0724 }        
-      },
-      {
-        title: 'Pullano’s Pizza',
-        location: { lat: 33.6122, lng: -112.1691 }
-      },
-      {
-        title: 'Pizzeria Bianco',
-        location: { lat: 33.4492, lng: -112.0656 }
-      },
-      {
-        title: 'Cibo',
-        location: { lat: 33.4550, lng: -112.0799 }
-        
-      },
-      {
-        title: 'Federal Pizza',
-        location: { lat: 33.5134, lng: -112.0741 }
-      }     
-    ],
-    markers: []
+  markers: [],
+    
   }
 //&callback=initMap
 componentDidMount(){
@@ -133,10 +113,37 @@ marker.addListener('click', function() {
 
 
 
+
+/*updateQuery = query => {
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i');
+      this.setState(state => ({
+        venues: state.venues.filter(myVenue =>
+          match.test(myVenue.venue.name)
+        ),
+        zoom: 15,
+        query: query,
+        //setEvents: false
+      }));
+    } else {
+      this.setState({
+        venues: this.state.venues,
+        query: ''
+      });
+    }
+  };*/
+
+
+
+
+
   /*componentDidMount(){
     this.renderMap()
     window.initMap = this.initMap
   }
+
+
+
 
 renderMap = () => {
   this.loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
@@ -165,7 +172,7 @@ renderMap = () => {
   render() {
     return (
       <div className="App">
-        <List />
+        <List state={ this.state } venues={this.state.venues} />
         <Map state={ this.state } />        
       </div>
       
@@ -178,16 +185,3 @@ renderMap = () => {
 
 export default App;
 
-//making http requests
-//https://medium.com/@thejasonfile/fetch-vs-axios-js-for-making-http-requests-2b261cdd3af5
-//https://flaviocopes.com/axios/
-
-//Get Venue Recommendations
-
-//https://developer.foursquare.com/docs/api/venues/explore
-
-//for making markers
-//https://developers.google.com/maps/documentation/javascript/markers
-
-//for making infowindow
-//https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
