@@ -11,6 +11,7 @@ class App extends Component {
   venues: [],
   map: {},
   markers: [],
+  query:''
     
   }
 //&callback=initMap
@@ -21,6 +22,10 @@ componentDidMount(){
     //window.initMap = this.initMap
     
   }
+
+/*updateQuery = (query) => {
+    this.setState({ query })    
+  }*/
 
 renderMap = () => {
   this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
@@ -99,9 +104,13 @@ marker.addListener('click', function() {
   }) */   
   }; 
 
+updateQuery = (query) => {
+    this.setState({ query })    
+  }
 
 
-  loadMap = (url) => {
+
+ loadMap = (url) => {
   //let container = window.document.getElementsByTagName('script')[0]
   let script = window.document.createElement('script')
   script.src = url
@@ -112,67 +121,11 @@ marker.addListener('click', function() {
 }
 
 
-
-
-/*updateQuery = query => {
-    if (query) {
-      const match = new RegExp(escapeRegExp(query), 'i');
-      this.setState(state => ({
-        venues: state.venues.filter(myVenue =>
-          match.test(myVenue.venue.name)
-        ),
-        zoom: 15,
-        query: query,
-        //setEvents: false
-      }));
-    } else {
-      this.setState({
-        venues: this.state.venues,
-        query: ''
-      });
-    }
-  };*/
-
-
-
-
-
-  /*componentDidMount(){
-    this.renderMap()
-    window.initMap = this.initMap
-  }
-
-
-
-
-renderMap = () => {
-  this.loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
-}
-
-  initMap = () => {
-   
-      const map = new window.google.maps.Map(document.getElementById('map'), {
-        center: { lat: 33.448376, lng: -112.074036 },
-        zoom: 13
-      }) 
-    
-  }; 
-
-
-
-  loadScript = (url) => {
-  let index = window.document.getElementsByTagName('script')[0]
-  let script = window.document.createElement('script')
-  script.src = url
-  script.async = true
-  script.defer = true
-  index.parentNode.insertBefore(script, index)
-}
-*/
   render() {
+    console.log("tt", this.state)
     return (
       <div className="App">
-        <List state={ this.state } venues={this.state.venues} />
+        <List state={ this.state } venues={this.state.venues} query={this.state.query} updateQuery={ this.updateQuery }/>
         <Map state={ this.state } />        
       </div>
       
