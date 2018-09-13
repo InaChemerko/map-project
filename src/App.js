@@ -68,7 +68,7 @@ getVenues = () => {
 let infowindow = new window.google.maps.InfoWindow()
 
 //display dinamic markers
-this.state.venues.map(myVenue => {
+let markers = this.state.venues.map(myVenue => {
 
   let contentString = `${myVenue.venue.name}`;
 
@@ -82,7 +82,8 @@ this.state.venues.map(myVenue => {
   let marker = new window.google.maps.Marker({
     position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
     map: this.map,
-    //title: myVenue.venue.name
+    title: myVenue.venue.name
+    //id: myVenue.venue.name
   })
 
 //click on a marker
@@ -95,37 +96,52 @@ marker.addListener('click', function() {
           infowindow.open(this.map, marker);
         });
 
-
+return marker;
 })
 /*let marker = new window.google.maps.Marker({
     position: { lat: 33.448376, lng: -112.074036 },
     map: this.map,
     title: 'Hello World!'
-  }) */   
+  }) */  
+
+  this.setState({ markers: markers }) 
   }; 
 
 updateQuery = (query) => {
-    this.setState({ query })    
+    this.setState({ query })
+    this.setAppropriateMarker(query)    
+  }
+
+setAppropriateMarker =(query) => {
+  if (query.trim() === "") {
+    this.state.markers.forEach(marker => marker.setVisible(true))
+    return true;
+  } else {
+    let newVenues = this.state.venues.filter(myVenue => {
+          return myVenue.venue.name.toLowerCase().indexOf(query.toLowerCase()) > -1
+      })
+    //newVenues.forEach(myVenue => this.state.markers.filter(marker => marker.title === myVenue.venue.name).map(marker => marker.setVisible(true)))
+    newVenues.forEach(myVenue => this.state.markers.filter(marker => marker.title !== myVenue.venue.name).map(marker => marker.setVisible(false)))
+    newVenues.forEach(myVenue => this.state.markers.filter(marker => marker.title === myVenue.venue.name).map(marker => marker.setVisible(true)))
+  }
   }
 
 
-
  loadMap = (url) => {
-  //let container = window.document.getElementsByTagName('script')[0]
   let script = window.document.createElement('script')
   script.src = url
   script.async = true
   script.defer = true
-  //container.parentNode.insertBefore(script, container)
   document.body.appendChild(script)
 }
 
 
   render() {
     console.log("tt", this.state)
+    console.log("markers", this.state.markers)
     return (
       <div className="App">
-        <List state={ this.state } venues={this.state.venues} query={this.state.query} updateQuery={ this.updateQuery }/>
+        <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery }/>
         <Map state={ this.state } />        
       </div>
       
