@@ -5,7 +5,15 @@ import escapeRegExp from 'escape-string-regexp'
 
 class List extends Component {
 
-  //state ={ }
+  state ={
+    listIsOpen: true
+  }
+
+  toggleList = () => {
+    this.setState(currentState => ({
+      listIsOpen: !currentState.listIsOpen
+    }))
+  }
 
   /*updateQuery = (query) => {
     this.setState({query})    
@@ -15,6 +23,7 @@ class List extends Component {
 
   render() {
 console.log(this.props.query)
+
 let filteredData = this.props.venues.filter(filterMyVenue => filterMyVenue.venue.name.toLowerCase().indexOf(this.props.query.toLowerCase()) > -1)
 		return(          
 		<nav className="navbar">            
@@ -24,8 +33,8 @@ let filteredData = this.props.venues.filter(filterMyVenue => filterMyVenue.venue
             	          placeholder="Search "
             	          value={this.props.query}
             	          onChange={(event) => this.props.updateQuery(event.target.value)}/>
-                        <span className="button">Filter</span>
-            	          <ul className="main-location">
+                        <span className="button" onClick={this.toggleList}>Filter</span>
+            	          <ul className={this.state.listIsOpen === true?"main-location":"hidden"}>
                         {filteredData.map((afterFilter) => {
                 return <li tabIndex='0' className="filter" key={afterFilter.venue.id}>{afterFilter.venue.name}</li>
             })}

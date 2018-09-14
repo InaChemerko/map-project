@@ -126,6 +126,11 @@ setAppropriateMarker =(query) => {
   }
   }
 
+//open infowindow when click on item of list
+  handleOnClick = ()=> {
+
+  }
+
 
  loadMap = (url) => {
   let script = window.document.createElement('script')
