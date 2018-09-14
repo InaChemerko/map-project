@@ -5,6 +5,8 @@ import Map from './components/Map'
 import axios from 'axios'
 import escapeRegExp from 'escape-string-regexp'
 //import sortBy from 'sort-by'
+import iconMarkerRed from './red-dot.png';
+import iconMarkerBlue from './blue-dot.png';
 
 class App extends Component {
  state = {
@@ -23,9 +25,6 @@ componentDidMount(){
     
   }
 
-/*updateQuery = (query) => {
-    this.setState({ query })    
-  }*/
 
 renderMap = () => {
   this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
@@ -82,12 +81,30 @@ let markers = this.state.venues.map(myVenue => {
   let marker = new window.google.maps.Marker({
     position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
     map: this.map,
-    title: myVenue.venue.name
+    title: myVenue.venue.name,
+    icon: iconMarkerRed
     //id: myVenue.venue.name
   })
 
+  
+marker.addListener('mouseover', function() {
+        marker.setIcon(iconMarkerBlue)
+        marker.setAnimation(window.google.maps.Animation.BOUNCE)        
+      })
+
+
+  marker.addListener('mouseout', function() {
+    marker.setIcon(iconMarkerRed)
+      marker.setAnimation(null);
+      })
+
+  
 //click on a marker
 marker.addListener('click', function() {
+//reset animation
+  for (let i = 0; i < markers.length; i++) {
+          markers[i].setAnimation(null);
+        }
 
   //change the content
   infowindow.setContent(contentString)
@@ -98,11 +115,6 @@ marker.addListener('click', function() {
 
 return marker;
 })
-/*let marker = new window.google.maps.Marker({
-    position: { lat: 33.448376, lng: -112.074036 },
-    map: this.map,
-    title: 'Hello World!'
-  }) */  
 
   this.setState({ markers: markers }) 
   }; 
