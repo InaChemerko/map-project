@@ -56,12 +56,14 @@ getVenues = () => {
 }
 
 
-openInfoWindow = (marker, contentString) => {
+openInfoWindow = (marker, place) => {
+  let contentString = `<div id="window">
+  <div class="header">${place.venue.name}</div>
+  <div class="content">${place.venue.location.formattedAddress}</div>
+  </div>`;
     this.state.infoWindow.setContent(contentString);
-    this.state.infoWindow.open( this.state.map, marker); 
+    this.state.infoWindow.open( this.state.map, marker);     
   }
-
-  
 
   initMap = () => {
    
@@ -92,9 +94,11 @@ let markers = this.state.venues.map(myVenue => {
     position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
     map: this.map,
     title: myVenue.venue.name,
-    icon: iconMarkerRed
-    //id: myVenue.venue.name
+    icon: iconMarkerRed,
+    id: myVenue.venue.name
   })
+
+ 
 
   
 marker.addListener('mouseover', function() {
@@ -109,12 +113,15 @@ marker.addListener('mouseover', function() {
       })
 
   marker.addListener('click', function() {
-this.openInfoWindow(marker, contentString)
+//this.openInfoWindow(marker, contentString)
+for (let i = 0; i < markers.length; i++) {
+          markers[i].setAnimation(null);
+        }
   //change the content
-  //infowindow.setContent(contentString)
+  infoWindow.setContent(contentString)
 
   //open an infowindow
-          //infowindow.open(this.map, marker);
+          infoWindow.open(this.map, marker);
         })
 return marker;
 })
@@ -141,6 +148,8 @@ setAppropriateMarker =(query) => {
   }
   }
 
+  
+
  loadMap = (url) => {
   let script = window.document.createElement('script')
   script.src = url
@@ -153,11 +162,11 @@ setAppropriateMarker =(query) => {
   render() {
     //console.log("tt", this.state)
     //console.log("markers", this.state.markers)
-    console.log("info", this.state.infoWindow)
-    console.log("info", this.state.map)
+    //console.log("info", this.state.infoWindow)
+    //console.log("info", this.state.map)
     return (
       <div className="App">
-        <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery }/>
+        <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery } openInfoWindow = {this.openInfoWindow} infoWindow={this.state.infoWindow} map={this.state.map}/>
         <Map state={ this.state } />        
       </div>
       
