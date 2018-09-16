@@ -13,6 +13,7 @@ class App extends Component {
   venues: [],
   map: {},
   markers: [],
+  infoWindow: [],
   query:''
     
   }
@@ -54,6 +55,14 @@ getVenues = () => {
   })
 }
 
+
+openInfoWindow = (marker, contentString) => {
+    this.state.infoWindow.setContent(contentString);
+    this.state.infoWindow.open( this.state.map, marker); 
+  }
+
+  
+
   initMap = () => {
    
    //create a map
@@ -62,21 +71,22 @@ getVenues = () => {
         zoom: 13
       }) 
 
+      //let myMap = this.map
 
+this.setState({ map: this.map })
 //create an infowindow
-let infowindow = new window.google.maps.InfoWindow()
+let infoWindow = new window.google.maps.InfoWindow()
+this.setState({ infoWindow })
 
 //display dinamic markers
 let markers = this.state.venues.map(myVenue => {
 
-  let contentString = `${myVenue.venue.name}`;
+  let contentString = `<div id="window">
+  <div class="header">${myVenue.venue.name}</div>
+  <div class="content">${myVenue.venue.location.formattedAddress}</div>
+  </div>`;
 
-//create an infowindow
-/*let infowindow = new window.google.maps.InfoWindow({
-          content: contentString
-        });*/
-
-
+ 
 //create a marker
   let marker = new window.google.maps.Marker({
     position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
@@ -98,27 +108,20 @@ marker.addListener('mouseover', function() {
       marker.setAnimation(null);
       })
 
-  
-//click on a marker
-marker.addListener('click', function() {
-//reset animation
-  for (let i = 0; i < markers.length; i++) {
-          markers[i].setAnimation(null);
-        }
-
+  marker.addListener('click', function() {
+this.openInfoWindow(marker, contentString)
   //change the content
-  infowindow.setContent(contentString)
+  //infowindow.setContent(contentString)
 
   //open an infowindow
-          infowindow.open(this.map, marker);
-        });
-
+          //infowindow.open(this.map, marker);
+        })
 return marker;
 })
 
   this.setState({ markers: markers }) 
   }; 
-
+  
 updateQuery = (query) => {
     this.setState({ query })
     this.setAppropriateMarker(query)    
@@ -138,12 +141,6 @@ setAppropriateMarker =(query) => {
   }
   }
 
-//open infowindow when click on item of list
-  handleOnClick = ()=> {
-
-  }
-
-
  loadMap = (url) => {
   let script = window.document.createElement('script')
   script.src = url
@@ -154,8 +151,10 @@ setAppropriateMarker =(query) => {
 
 
   render() {
-    console.log("tt", this.state)
-    console.log("markers", this.state.markers)
+    //console.log("tt", this.state)
+    //console.log("markers", this.state.markers)
+    console.log("info", this.state.infoWindow)
+    console.log("info", this.state.map)
     return (
       <div className="App">
         <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery }/>

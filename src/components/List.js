@@ -15,6 +15,7 @@ class List extends Component {
     }))
   }
 
+  
   /*updateQuery = (query) => {
     this.setState({query})    
   }*/
