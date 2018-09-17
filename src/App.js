@@ -57,7 +57,7 @@ getVenues = () => {
 
 
 openInfoWindow = (marker, place) => {
-  let contentString = `<div id="window">
+  let contentString = `<div id="window" tabindex="1">
   <div class="header">${place.venue.name}</div>
   <div class="content">${place.venue.location.formattedAddress}</div>
   </div>`;
@@ -83,7 +83,7 @@ this.setState({ infoWindow })
 //display dinamic markers
 let markers = this.state.venues.map(myVenue => {
 
-  let contentString = `<div id="window">
+  let contentString = `<div id="window" tabindex="1">
   <div class="header">${myVenue.venue.name}</div>
   <div class="content">${myVenue.venue.location.formattedAddress}</div>
   </div>`;

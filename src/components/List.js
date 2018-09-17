@@ -26,7 +26,7 @@ openonClick = (id, place) => {
   //this.props.markers[id].setIcon(iconMarkerBlue)
   this.props.markers[id].setAnimation(window.google.maps.Animation.BOUNCE)
    }
-  
+  //<span className="button" onClick={this.toggleList}>Filter</span>
   render() {
 //console.log(this.props.query)
 console.log("markers",this.props.markers)
@@ -35,13 +35,15 @@ let filteredData = this.props.venues.filter(filterMyVenue => filterMyVenue.venue
 		return(          
 		<nav className="navbar">            
                         <div className="list">
-                          <input className="search"
+                        <div className="list-search">
+                          <input className="search" role="search" aria-label="search" tabIndex="0"
                           type="text"
             	          placeholder="Search "
             	          value={this.props.query}
             	          onChange={(event) => this.props.updateQuery(event.target.value)}/>
-                        <span className="button" onClick={this.toggleList}>Filter</span>
-            	          <ul className={this.state.listIsOpen === true?"main-location":"hidden"}>
+                        <span className="button" onClick={this.toggleList}>Filter</span> 
+                        <h2>Phoenix cafes</h2></div>
+                        <ul className={this.state.listIsOpen === true?"main-location":"hidden"} tabIndex="0" arial-label="navigation" role="navigation">
                         {filteredData.map((afterFilter, index) => {
                 return <li tabIndex='0' className="filter" key={afterFilter.venue.id} onClick={()=> this.openonClick(index,afterFilter)}>{afterFilter.venue.name}</li>
             })}
