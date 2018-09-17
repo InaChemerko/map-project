@@ -97,7 +97,8 @@ let markers = this.state.venues.map(myVenue => {
     map: this.map,
     title: myVenue.venue.name,
     icon: iconMarkerRed,
-    id: myVenue.venue.name
+    //id: myVenue.venue.name
+    id: myVenue.venue.id
   })
   
   marker.addListener('mouseover', function() {
@@ -157,7 +158,12 @@ setAppropriateMarker =(query) => {
   document.body.appendChild(script)
 }
 
-   render() {    
+   render() { 
+   console.log(this.venues)  
+   console.log("tt", this.state)
+    //console.log("markers", this.state.markers)
+    //console.log("info", this.state.infoWindow)
+    //console.log("info", this.state.map) 
     return (
       <div className="App">
         <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery } openInfoWindow = {this.openInfoWindow} infoWindow={this.state.infoWindow} map={this.state.map}/>

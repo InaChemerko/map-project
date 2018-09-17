@@ -36,6 +36,7 @@ openonClick = (id, place) => {
 //console.log("markers",this.props.markers)
 //console.log("infwind",this.props.infoWindow)
 let filteredData = this.props.venues.filter(filterMyVenue => filterMyVenue.venue.name.toLowerCase().indexOf(this.props.query.toLowerCase()) > -1)
+console.log("filter",filteredData)
 		return(          
 		<nav className="navbar">            
                         <div className="list">
@@ -48,8 +49,8 @@ let filteredData = this.props.venues.filter(filterMyVenue => filterMyVenue.venue
                         <span className="button" onClick={this.toggleList}>Filter</span> 
                         <h2>Phoenix cafes</h2></div>
                         <ul className={this.state.listIsOpen === true?"main-location":"hidden"} tabIndex="0" arial-label="navigation" role="navigation">
-                        {filteredData.map((afterFilter, index) => {
-                return <li className="filter" key={afterFilter.venue.id} tabIndex='0' onClick={()=> this.openonClick(index,afterFilter)}>{afterFilter.venue.name}</li>
+                        {filteredData.map((afterFilter, id) => {
+                return <li className="filter" key={afterFilter.venue.id} tabIndex='0' onClick={()=> this.openonClick(id,afterFilter)}>{afterFilter.venue.name}</li>
             })}
             	          
             	          </ul>
