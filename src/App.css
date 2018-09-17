@@ -39,9 +39,10 @@
   //justify-content: space-around;
   //flex-flow: wrap; 
   background-color: #3397DB;
-  
+  padding: 5px 0;
   position: relative;
   //align-items: center; 
+  //height: 100vh
 
 }
 
@@ -71,8 +72,8 @@
     padding: 0px 10px;
     overflow: hidden; 
     overflow-y: scroll;
-    height:300px; 
-    width:40%;
+    max-height:100vh; 
+    //width:40%;
 }
 
 .main-location li {

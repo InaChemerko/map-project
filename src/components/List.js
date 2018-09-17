@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import sortBy from 'sort-by'
 import escapeRegExp from 'escape-string-regexp'
 import iconMarkerBlue from '../blue-dot.png';
+import iconMarkerRed from '../red-dot.png'
 
 
 class List extends Component {
@@ -24,7 +25,7 @@ openonClick = (id, place) => {
   this.props.openInfoWindow(this.props.markers[id], place)
   //this.props.markers[id].setIcon(iconMarkerBlue)
   this.props.markers[id].setAnimation(window.google.maps.Animation.BOUNCE)
-}
+   }
   
   render() {
 //console.log(this.props.query)

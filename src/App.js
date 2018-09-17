@@ -158,7 +158,7 @@ setAppropriateMarker =(query) => {
   document.body.appendChild(script)
 }
 
-
+  
   render() {
     //console.log("tt", this.state)
     //console.log("markers", this.state.markers)
