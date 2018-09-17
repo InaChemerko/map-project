@@ -3,7 +3,7 @@ import './App.css';
 import List from './components/List';
 import Map from './components/Map'
 import axios from 'axios'
-import escapeRegExp from 'escape-string-regexp'
+//import escapeRegExp from 'escape-string-regexp'
 //import sortBy from 'sort-by'
 import iconMarkerRed from './red-dot.png';
 import iconMarkerBlue from './blue-dot.png';
@@ -17,11 +17,10 @@ class App extends Component {
   query:''
     
   }
-//&callback=initMap
+
 componentDidMount(){
   this.getVenues()
     //this.loadMap("https://maps.googleapis.com/maps/api/js?key=AIzaSyBghIJChiunCVZ3w9qLgAQOcYh9NvSyUIY&v=3&callback=initMap")
-    
     //window.initMap = this.initMap
     
   }
@@ -33,6 +32,11 @@ window.initMap = this.initMap
 
 }
 
+//make requests
+//https://medium.com/@thejasonfile/fetch-vs-axios-js-for-making-http-requests-2b261cdd3af5
+//https://flaviocopes.com/axios/
+//get Venue Recommendations
+//https://developer.foursquare.com/docs/api/venues/explore
 getVenues = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?"
   const parameters = {
@@ -51,11 +55,11 @@ getVenues = () => {
     //console.log(response)
   })
   .catch(error => {
-    console.log("error " + error)
+    console.log("Error!!! " + error)
   })
 }
 
-
+//open infoWindow
 openInfoWindow = (marker, place) => {
   let contentString = `<div id="window" tabindex="1">
   <div class="header">${place.venue.name}</div>
@@ -70,13 +74,10 @@ openInfoWindow = (marker, place) => {
    //create a map
       this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat: 33.448376, lng: -112.074036 },
-        zoom: 13
-      }) 
-
-      //let myMap = this.map
-
+        zoom: 10
+      })       
 this.setState({ map: this.map })
-//create an infowindow
+//create an infoWindow
 let infoWindow = new window.google.maps.InfoWindow()
 this.setState({ infoWindow })
 
@@ -90,6 +91,7 @@ let markers = this.state.venues.map(myVenue => {
 
  
 //create a marker
+//https://developers.google.com/maps/documentation/javascript/markers
   let marker = new window.google.maps.Marker({
     position: { lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng },
     map: this.map,
@@ -97,15 +99,11 @@ let markers = this.state.venues.map(myVenue => {
     icon: iconMarkerRed,
     id: myVenue.venue.name
   })
-
- 
-
   
-marker.addListener('mouseover', function() {
+  marker.addListener('mouseover', function() {
         marker.setIcon(iconMarkerBlue)
         marker.setAnimation(window.google.maps.Animation.BOUNCE)        
       })
-
 
   marker.addListener('mouseout', function() {
     marker.setIcon(iconMarkerRed)
@@ -119,21 +117,24 @@ for (let i = 0; i < markers.length; i++) {
         }
   //change the content
   infoWindow.setContent(contentString)
-
   //open an infowindow
           infoWindow.open(this.map, marker);
         })
 return marker;
 })
-
   this.setState({ markers: markers }) 
   }; 
   
-updateQuery = (query) => {
+updateQuery = (query) => {  
+    this.state.infoWindow.close()
     this.setState({ query })
     this.setAppropriateMarker(query)    
   }
 
+//set appropriate marker
+//The setVisible method for the google.maps.Marker
+//http://eyecatchup.github.io/2011/06/03/the-setvisible-method-for-the-google-maps-marker-class-or-how-to-toggle-marker-icons-with-the-google-maps-v3-javascript-api
+//https://stackoverflow.com/questions/36698002/setvisible-on-google-map-markers?rq=1
 setAppropriateMarker =(query) => {
   if (query.trim() === "") {
     this.state.markers.forEach(marker => marker.setVisible(true))
@@ -148,8 +149,6 @@ setAppropriateMarker =(query) => {
   }
   }
 
-  
-
  loadMap = (url) => {
   let script = window.document.createElement('script')
   script.src = url
@@ -158,12 +157,7 @@ setAppropriateMarker =(query) => {
   document.body.appendChild(script)
 }
 
-  
-  render() {
-    //console.log("tt", this.state)
-    //console.log("markers", this.state.markers)
-    //console.log("info", this.state.infoWindow)
-    //console.log("info", this.state.map)
+   render() {    
     return (
       <div className="App">
         <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery } openInfoWindow = {this.openInfoWindow} infoWindow={this.state.infoWindow} map={this.state.map}/>
@@ -174,8 +168,6 @@ setAppropriateMarker =(query) => {
   }
 
 }
-
-
 
 export default App;
 
