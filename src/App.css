@@ -73,6 +73,11 @@
     display: none;
 }
 
+.header{
+font-weight: bold;
+text-align: center;
+}
+
 .main-location {
     position: absolute;
     z-index: 1;
@@ -97,4 +102,13 @@
     cursor: pointer;
     background: lightgray;
     color: #000000;
+}
+
+@media screen and (max-width: 470px){
+  .field {
+    order:2;
+  }
+  .title {    
+    padding-bottom: 5px;
+  }
 }

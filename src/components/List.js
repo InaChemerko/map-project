@@ -41,12 +41,13 @@ console.log("filter",filteredData)
 		<nav className="navbar">            
                         <div className="list">
                         <div className="list-search">
+                        <div className="field">
                           <input className="search" role="search" aria-label="search"
                           type="text"
             	          placeholder="Search "
             	          value={this.props.query}
             	          onChange={(event) => this.props.updateQuery(event.target.value)}/>
-                        <span className="button" onClick={this.toggleList}>Filter</span> 
+                        <span className="button" onClick={this.toggleList}>Filter</span> </div>
                         <h2 className="title">Phoenix cafes</h2></div>
                         <ul className={this.state.listIsOpen === true?"main-location":"hidden"} tabIndex="0" arial-label="navigation" role="navigation">
                         {filteredData.map((afterFilter, id) => {
