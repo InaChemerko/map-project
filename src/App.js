@@ -69,6 +69,7 @@ openInfoWindow = (marker, place) => {
     this.state.infoWindow.open( this.state.map, marker);     
   }
 
+//https://developers.google.com/maps/documentation/javascript/adding-a-google-map
   initMap = () => {
    
    //create a map

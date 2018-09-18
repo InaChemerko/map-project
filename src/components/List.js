@@ -47,7 +47,7 @@ console.log("filter",filteredData)
             	          value={this.props.query}
             	          onChange={(event) => this.props.updateQuery(event.target.value)}/>
                         <span className="button" onClick={this.toggleList}>Filter</span> 
-                        <h2>Phoenix cafes</h2></div>
+                        <h2 className="title">Phoenix cafes</h2></div>
                         <ul className={this.state.listIsOpen === true?"main-location":"hidden"} tabIndex="0" arial-label="navigation" role="navigation">
                         {filteredData.map((afterFilter, id) => {
                 return <li className="filter" key={afterFilter.venue.id} tabIndex='0' onClick={()=> this.openonClick(id,afterFilter)}>{afterFilter.venue.name}</li>

@@ -33,27 +33,34 @@
 }
 
 .list {  
-  background-color: #3397DB;
-  padding: 5px 0;
+  background-color: black;
+  color: lightgray;
+  padding: 10px 0;
   position: relative;
 }
 
-h2 {
-  font-size: 36px; 
-  float: right;
+.list .title {
+     font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+    text-align: center;
+    margin: auto;
 }
 
 .list .search {
     padding: 5px;
     margin-left: 5px;
-
+    border-radius: 2px;
+    outline:none;
 }
 
 .list .button{
-    padding: 6px;
-    background: blue;
-    color: lightgray;
+    padding: 8px;
+    background: #d3d3d3;
+    color: black;
+    border-radius: 2px;
     cursor: pointer;
+    margin-left: 1px;
 }
 
 .list-search {
@@ -69,10 +76,9 @@ h2 {
 .main-location {
     position: absolute;
     z-index: 1;
-    background: #3397DB;
-    margin: 0px;
+    margin: 10px 0px 0px 0px;
     list-style: none;
-    padding: 0px 10px;
+    padding: 0px 0px;
     overflow: hidden; 
     overflow-y: scroll;
     max-height:100vh; 
@@ -80,12 +86,15 @@ h2 {
 }
 
 .main-location li {
-    /*display: inline;*/
-    /*width: 100px;*/
     padding: 5px;
-    //color: lightgray;
+    background: #000000;
+    color: #a6a6a6;
+    outline:none;
+    border-bottom: 1px solid #070707;
 }
-.fa fa-close{
-font-size: 2em;
-  margin: 0 5px;
+
+.main-location li:hover {
+    cursor: pointer;
+    background: lightgray;
+    color: #000000;
 }
