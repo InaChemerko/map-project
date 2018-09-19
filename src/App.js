@@ -55,7 +55,7 @@ getVenues = () => {
     //console.log(response)
   })
   .catch(error => {
-    console.log("Error!!! " + error)
+    alert("Error!!! " + error)
   })
 }
 
@@ -65,6 +65,7 @@ openInfoWindow = (marker, place) => {
   <div class="header">${place.venue.name}</div>
   <div class="content">${place.venue.location.formattedAddress}</div>
   </div>`;
+
     this.state.infoWindow.setContent(contentString);
     this.state.infoWindow.open( this.state.map, marker);     
   }
@@ -75,7 +76,7 @@ openInfoWindow = (marker, place) => {
    //create a map
       this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat: 33.448376, lng: -112.074036 },
-        zoom: 10
+        zoom: 11
       })       
 this.setState({ map: this.map })
 //create an infoWindow
@@ -84,13 +85,7 @@ this.setState({ infoWindow })
 
 //display dinamic markers
 let markers = this.state.venues.map(myVenue => {
-
-  let contentString = `<div id="window" tabindex="1">
-  <div class="header">${myVenue.venue.name}</div>
-  <div class="content">${myVenue.venue.location.formattedAddress}</div>
-  </div>`;
-
- 
+   
 //create a marker
 //https://developers.google.com/maps/documentation/javascript/markers
   let marker = new window.google.maps.Marker({
@@ -101,6 +96,11 @@ let markers = this.state.venues.map(myVenue => {
     //id: myVenue.venue.name
     id: myVenue.venue.id
   })
+
+  let contentString = `<div id="window" tabindex="1">
+  <div class="header">${myVenue.venue.name}</div>
+  <div class="content">${myVenue.venue.location.formattedAddress}</div>
+  </div>`;
   
   marker.addListener('mouseover', function() {
         marker.setIcon(iconMarkerBlue)
@@ -113,10 +113,10 @@ let markers = this.state.venues.map(myVenue => {
       })
 
   marker.addListener('click', function() {
-//this.openInfoWindow(marker, contentString)
 for (let i = 0; i < markers.length; i++) {
           markers[i].setAnimation(null);
         }
+        
   //change the content
   infoWindow.setContent(contentString)
   //open an infowindow
@@ -150,21 +150,19 @@ setAppropriateMarker =(query) => {
     newVenues.forEach(myVenue => this.state.markers.filter(marker => marker.title === myVenue.venue.name).map(marker => marker.setVisible(true)))
   }
   }
-
+  
  loadMap = (url) => {
   let script = window.document.createElement('script')
   script.src = url
   script.async = true
   script.defer = true
+  script.setAttribute('onerror', `errorMapLoad()`)
   document.body.appendChild(script)
 }
 
    render() { 
-   console.log(this.venues)  
-   console.log("tt", this.state)
-    //console.log("markers", this.state.markers)
-    //console.log("info", this.state.infoWindow)
-    //console.log("info", this.state.map) 
+   //console.log(this.venues)  
+      
     return (
       <div className="App">
         <List state={ this.state } venues={this.state.venues} query={this.state.query} markers={this.state.markers} updateQuery={ this.updateQuery } openInfoWindow = {this.openInfoWindow} infoWindow={this.state.infoWindow} map={this.state.map}/>
